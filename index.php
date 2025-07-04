@@ -37,7 +37,6 @@ $unterwegs = "bilder/unterwegs.jpg";
     <div class="timestamp" id="zeit1">Aktuelle Uhrzeit (Server): <?= $zeit ?></div>
     <div class="bild-wrapper">
       <img src="<?= $latest ?>?t=<?= time() ?>" alt="Webcam Westen" id="webcam1" class="webcam-image">
-      <div id="windrichtung-overlay1" class="windrichtung-overlay">💨</div>
     </div>
 
     <div class="row">
@@ -59,7 +58,6 @@ $unterwegs = "bilder/unterwegs.jpg";
     <div class="timestamp" id="zeit2">Aktuelle Uhrzeit (Server): <?= $zeit ?></div>
     <div class="bild-wrapper">
       <img src="<?= $unterwegs ?>?t=<?= time() ?>" alt="Webcam Süden" id="webcam2" class="webcam-image">
-      <div id="windrichtung-overlay2" class="windrichtung-overlay">💨</div>
     </div>
   </div>
 

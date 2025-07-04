@@ -1,4 +1,3 @@
-// map.js
 import { movePoint } from './utils.js';
 
 export function initMap(lat, lng) {
@@ -26,14 +25,6 @@ export function animateWindFlow(map, startLatLng, windDeg, camDir) {
 
   const line = L.polyline([startLatLng, endLatLng], { color: 'blue', weight: 3 }).addTo(map);
 
-  const arrowIcon = L.divIcon({
-    className: 'wind-arrow-icon',
-    html: '🡢',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12]
-  });
-
-  const marker = L.marker(startLatLng, { icon: arrowIcon }).addTo(map);
 
   let progress = 0;
   const steps = 100;

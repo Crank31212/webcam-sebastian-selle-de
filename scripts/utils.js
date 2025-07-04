@@ -1,4 +1,3 @@
-// utils.js
 export function degToCompass(num) {
   const directions = ["N","NNO","NO","ONO","O","OSO","SO","SSO","S","SSW","SW","WSW","W","WNW","NW","NNW"];
   const val = Math.floor((num / 22.5) + 0.5) % 16;

@@ -100,24 +100,12 @@ footer {
   width: 100%;
 }
 
-.windrichtung-overlay {
-  position: absolute;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%) rotate(0deg);
-  font-size: 2.5rem;
-  pointer-events: none;
-  user-select: none;
-  color: #007acc;
-  text-shadow: 0 0 4px rgba(255,255,255,0.8);
-  transition: transform 0.5s ease;
-}
 
 /* Leaflet Wind-Pfeil */
 .wind-arrow-icon {
   font-size: 24px;
   color: #007acc;
-  transition: transform 0.2s linear;
+  transition: transform 0.1s linear;
   user-select: none;
   pointer-events: none;
 }

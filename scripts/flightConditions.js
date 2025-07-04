@@ -1,5 +1,3 @@
-// flightConditions.js
-
 export function updateFlightConditions(current) {
   const wind = current.wind.speed;
   const clouds = current.clouds.all;

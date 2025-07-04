@@ -1,4 +1,3 @@
-// main.js
 import { degToCompass, movePoint } from './utils.js';
 import { initMap, drawCameraView, animateWindFlow } from './map.js';
 import { fetchWeather, updateWeatherUI } from './weather.js';
@@ -51,4 +50,7 @@ async function main() {
 }
 
 main();
+
+
+
 

@@ -1,4 +1,3 @@
-// weather.js
 import { degToCompass } from './utils.js';
 
 const apiKey = "6727e6ab6df77e54745cbb646e8d8668";
