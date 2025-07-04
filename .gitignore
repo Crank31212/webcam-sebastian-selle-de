@@ -1,8 +1,1 @@
-
----
-
-
-```gitignore
-/public/bilder/*.jpg
-/public/*.zip
-/public/cache/
+/bilder/*.jpg
