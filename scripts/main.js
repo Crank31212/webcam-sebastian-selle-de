@@ -7,12 +7,18 @@ const camLat = 53.284800;
 const camLng = 7.891477;
 const camDirections = { west: 270, south: 180 };
 
+
+
+
+
 function updateTime() {
   const now = new Date().toLocaleTimeString("de-DE", {
     hour: '2-digit', minute: '2-digit', second: '2-digit'
   });
-  document.getElementById("zeit1").textContent = "Aktuelle Uhrzeit: " + now;
-  document.getElementById("zeit2").textContent = "Aktuelle Uhrzeit: " + now;
+  const z1 = document.getElementById("zeit1");
+  const z2 = document.getElementById("zeit2");
+  if (z1) z1.textContent = "Aktuelle Uhrzeit: " + now;
+  if (z2) z2.textContent = "Aktuelle Uhrzeit: " + now;
 }
 
 setInterval(updateTime, 1000);
@@ -38,19 +44,52 @@ async function main() {
     updateFlightConditions(weatherData.list[0]);
 
     const windDeg = weatherData.list[0].wind.deg || 0;
-
     animateWindFlow(map, [camLat, camLng], windDeg, camDirections.west);
-    // animateWindFlow(map, [camLat, camLng], windDeg, camDirections.south); // falls andere Koordinaten
+    // Falls du für Süden auch animieren willst:
+    // animateWindFlow(map, [camLat, camLng], windDeg, camDirections.south);
 
   } catch (err) {
     console.error("Fehler beim Laden der Wetterdaten:", err);
     const wetterbox = document.getElementById("wetterbox");
     if (wetterbox) wetterbox.textContent = "Wetterdaten konnten nicht geladen werden.";
   }
+
+  // Sonnenstand mit SunCalc (sofern eingebunden)
+  const sonnebox = document.getElementById("sonnebox");
+  if (sonnebox && SunCalc) {
+    const times = SunCalc.getTimes(new Date(), camLat, camLng);
+    const aufgang = times.sunrise.toLocaleTimeString("de-DE", { hour: '2-digit', minute: '2-digit' });
+    const untergang = times.sunset.toLocaleTimeString("de-DE", { hour: '2-digit', minute: '2-digit' });
+    const dauer = Math.round((times.sunset - times.sunrise) / (1000 * 60 * 60) * 10) / 10;
+
+    sonnebox.innerHTML = `
+      🌅 Sonnenaufgang: ${aufgang}<br>
+      🌇 Sonnenuntergang: ${untergang}<br>
+      🕒 Tageslichtdauer: ${dauer} Stunden
+    `;
+  }
 }
 
+// Vollbildfunktion für Bilder
+function toggleFullscreen(elem) {
+  if (!document.fullscreenElement) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+}
+
+document.querySelectorAll('.webcam-image').forEach(img => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => toggleFullscreen(img));
+});
+
 main();
-
-
-
-
