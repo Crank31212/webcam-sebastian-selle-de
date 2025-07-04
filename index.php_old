@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Webcam - Sebastian Selle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="styles/main.css">
+  <script src="scripts/main.js" defer></script>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-semicircle"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #007acc;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .webcam-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      padding: 1rem;
+    }
+
+    .webcam-card h2 {
+      margin-top: 0;
+      color: #007acc;
+    }
+
+    .webcam-image {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .column {
+      flex: 1 1 48%;
+      min-width: 300px;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      background: #ccc;
+    }
+
+    #wetterbox {
+      background: #eef;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Live-Webcam – Sebastian Selle</h1>
+</header>
+
+<div class="container">
+  <div class="webcam-card">
+    <h2>Modern Next GmbH – Blick nach Westen</h2>
+    <img src="bilder/latest.jpg" alt="Webcam Modern Next" id="webcam1" class="webcam-image">
+
+    <div class="row">
+      <div class="column">
+        <h3>Kartenansicht</h3>
+        <div id="map"></div>
+      </div>
+
+      <div class="column">
+        <h3>Wetter in Westerstede</h3>
+        <div id="wetterbox">Wetterdaten werden geladen…</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © Sebastian Selle · webcam.sebastian-selle.de
+</footer>
+
+<script>
+  // Live-Bild aktualisieren
+  setInterval(() => {
+    const timestamp = new Date().getTime();
+    document.getElementById('webcam1').src = `bilder/latest.jpg?t=${timestamp}`;
+  }, 10000);
+
+  // Leaflet Map
+  const map = L.map('map').setView([53.284800, 7.891477], 17);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap-Mitwirkende'
+  }).addTo(map);
+
+  const camLat = 53.284800;
+  const camLng = 7.891477;
+
+  const cameraView = L.semiCircle([camLat, camLng], {
+    radius: 100,
+    startAngle: 270 - 87 / 2,
+    stopAngle: 270 + 87 / 2,
+    color: "#007acc",
+    fillColor: "#007acc",
+    fillOpacity: 0.4,
+    weight: 2
+  }).addTo(map);
+
+  L.marker([camLat, camLng]).addTo(map).bindPopup("Webcam: Blickrichtung Westen");
+
+  const apiKey = "6727e6ab6df77e54745cbb646e8d8668";
+  const cityId = 2810188;
+
+  fetch(`https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=metric&lang=de`)
+    .then(res => res.json())
+    .then(data => {
+      const current = data.list[0]; // aktueller Zeitblock
+      let html = `
+        <strong>Aktuelles Wetter:</strong><br>
+        🌡 Temperatur: ${current.main.temp} °C<br>
+        📈 Luftdruck: ${current.main.pressure} hPa<br>
+        🌬 Wind: ${current.wind.speed} m/s<br>
+        💧 Luftfeuchtigkeit: ${current.main.humidity} %<br>
+        ☁️ Wolken: ${current.clouds.all} %<br>
+        🌤 Zustand: ${current.weather[0].description}<br><br>
+        <strong>Vorhersage (nächste 6h):</strong><br>
+      `;
+
+      for (let i = 1; i <= 2; i++) {
+        const forecast = data.list[i];
+        const time = new Date(forecast.dt * 1000).toLocaleTimeString("de-DE", {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        html += `🕒 ${time} – ${forecast.main.temp} °C, ${forecast.weather[0].description}<br>`;
+      }
+
+      document.getElementById("wetterbox").innerHTML = html;
+    })
+    .catch(err => {
+      document.getElementById("wetterbox").innerText = "Wetterdaten konnten nicht geladen werden.";
+      console.error(err);
+    });
+</script>
+
+</body>
+</html>
+
