@@ -1,0 +1,8 @@
+
+---
+
+
+```gitignore
+/public/bilder/*.jpg
+/public/*.zip
+/public/cache/
