@@ -3,8 +3,8 @@
 $zeit = date("H:i:s");
 
 // Optional: letzter Bildzeitstempel (wenn existiert)
-$latest = "bilder/latest.jpg";
-$unterwegs = "bilder/unterwegs.jpg";
+$westen = "bilder/westen.jpg";
+$sueden = "bilder/sueden.jpg";
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -36,7 +36,7 @@ $unterwegs = "bilder/unterwegs.jpg";
     <h2>Modern Next GmbH – Blick nach Westen</h2>
     <div class="timestamp" id="zeit1">Aktuelle Uhrzeit (Server): <?= $zeit ?></div>
     <div class="bild-wrapper">
-      <img src="<?= $latest ?>?t=<?= time() ?>" alt="Webcam Westen" id="webcam1" class="webcam-image">
+      <img src="<?= $westen ?>?t=<?= time() ?>" alt="Webcam Westen" id="webcam1" class="webcam-image">
     </div>
 
     <div class="row">
@@ -57,7 +57,7 @@ $unterwegs = "bilder/unterwegs.jpg";
     <h2>Modern Next GmbH – Blick nach Süden</h2>
     <div class="timestamp" id="zeit2">Aktuelle Uhrzeit (Server): <?= $zeit ?></div>
     <div class="bild-wrapper">
-      <img src="<?= $unterwegs ?>?t=<?= time() ?>" alt="Webcam Süden" id="webcam2" class="webcam-image">
+      <img src="<?= $sueden ?>?t=<?= time() ?>" alt="Webcam Süden" id="webcam2" class="webcam-image">
     </div>
   </div>
 

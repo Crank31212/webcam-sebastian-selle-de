@@ -28,8 +28,8 @@ setInterval(() => {
   const ts = Date.now();
   const w1 = document.getElementById("webcam1");
   const w2 = document.getElementById("webcam2");
-  if (w1) w1.src = `bilder/latest.jpg?t=${ts}`;
-  if (w2) w2.src = `bilder/unterwegs.jpg?t=${ts}`;
+  if (w1) w1.src = `bilder/westen.jpg?t=${ts}`;
+  if (w2) w2.src = `bilder/sueden.jpg?t=${ts}`;
 }, 2000);
 
 async function main() {
