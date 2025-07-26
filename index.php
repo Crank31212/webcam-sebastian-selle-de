@@ -61,8 +61,29 @@ $sueden = "bilder/sueden.jpg";
     </div>
   </div>
 
-</div>
 
+  <div class="webcam-card">
+    <h2>Archiv – Blick nach Westen (stündlich)</h2>
+    <p>Die letzten Webcam-Bilder der letzten Stunden.</p>
+
+    <div class="gallery">
+      <?php
+        $archivPfad = "bilder/static/archive";
+        $bilder = glob($archivPfad . "/*.jpg");
+        rsort($bilder); // neueste zuerst
+
+        // Maximal 24 Bilder anzeigen (1 Tag)
+        $bilder = array_slice($bilder, 0, 24);
+
+        foreach ($bilder as $bild) {
+          $dateiname = basename($bild);
+          echo "<img src='$bild' alt='$dateiname'>";
+        }
+      ?>
+    </div>
+  </div>
+
+</div>
 <footer>
   © Sebastian Selle · webcam.sebastian-selle.de
 </footer>
