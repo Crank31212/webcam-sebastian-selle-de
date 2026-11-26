@@ -15,3 +15,8 @@
 ```bash
 git clone https://github.com/dein-benutzername/sebastian-selle-webcam.git
 cd sebastian-selle-webcam
+```
+
+## Dokumentation
+
+Architektur und Betrieb: siehe [docs/](docs/) – [ARCHITEKTUR.md](docs/ARCHITEKTUR.md), [BETRIEB.md](docs/BETRIEB.md).
